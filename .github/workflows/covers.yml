@@ -38,7 +38,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           python tools/scrape_covers.py
       - name: continue if unfinished
-        if: steps.scrape.outputs.left != '0' && steps.scrape.outputs.left != '' && steps.scrape.outputs.limit == '0'
+        if: steps.scrape.outputs.left != '' && fromJSON(steps.scrape.outputs.left) > 200 && steps.scrape.outputs.limit == '0'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run covers.yml --ref main
